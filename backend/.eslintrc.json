@@ -20,7 +20,8 @@
   ],
   "rules": {
     "prettier/prettier": "error",
-    "camelcase": ["error", {"allow": ["created_at", "updated_at", "provider_id"]}],
+    "camelcase":"off",
+    "@typescript-eslint/camelcase": "off",
     "class-methods-use-this":"off",
     "import/extensions": [
       "error",
