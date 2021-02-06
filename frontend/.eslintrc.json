@@ -28,6 +28,7 @@
       "no-use-before-define": "off",
       "@typescript-eslint/no-use-before-define": ["error"],
       "@typescript-eslint/ban-types": "off",
+      "@typescript-eslint/no-empty-function": "off",
       "prettier/prettier": "error",
       "react/jsx-props-no-spreading": "off",
       "react/prop-types": "off",
