@@ -8,37 +8,47 @@ import Input from '../../components/input/index';
 import Button from '../../components/button/index';
 import logoImg from '../../assets/logo.svg';
 
-import AuthContext from '../../context/AuthContext';
+import { AuthContext } from '../../context/AuthContext';
 import getValidationErrors from '../../utils/getValidationErros';
 
 import { Container, Content, Background } from './styles';
 
+interface SingInFormData {
+  email: string;
+  password: string;
+}
+
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
-  const auth = useContext(AuthContext);
+  const { singIn } = useContext(AuthContext);
 
-  console.log(auth);
+  const handleSubmit = useCallback(
+    async (data: SingInFormData) => {
+      try {
+        formRef.current?.setErrors({});
 
-  const handleSubmit = useCallback(async (data: object) => {
-    try {
-      formRef.current?.setErrors({});
+        const schema = Yup.object().shape({
+          email: Yup.string()
+            .required('E-mail obrigatório')
+            .email('Digite um e-mail válido'),
+          password: Yup.string().required('Senha obrigatória'),
+        });
+        await schema.validate(data, {
+          abortEarly: false,
+        });
+        singIn({
+          email: data.email,
+          password: data.password,
+        });
+      } catch (err) {
+        const errors = getValidationErrors(err);
 
-      const schema = Yup.object().shape({
-        email: Yup.string()
-          .required('E-mail obrigatório')
-          .email('Digite um e-mail válido'),
-        password: Yup.string().required('Senha obrigatória'),
-      });
-      await schema.validate(data, {
-        abortEarly: false,
-      });
-    } catch (err) {
-      const errors = getValidationErrors(err);
-
-      formRef.current?.setErrors(errors);
-    }
-  }, []);
+        formRef.current?.setErrors(errors);
+      }
+    },
+    [singIn],
+  );
 
   return (
     <Container>
