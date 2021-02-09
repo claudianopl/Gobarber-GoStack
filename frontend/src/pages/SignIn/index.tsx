@@ -8,7 +8,8 @@ import Input from '../../components/input/index';
 import Button from '../../components/button/index';
 import logoImg from '../../assets/logo.svg';
 
-import { useAuth } from '../../hooks/AuthContext';
+import { useAuth } from '../../hooks/auth';
+import { useToast } from '../../hooks/toasts';
 import getValidationErrors from '../../utils/getValidationErros';
 
 import { Container, Content, Background } from './styles';
@@ -22,6 +23,7 @@ const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const { singIn } = useAuth();
+  const { addToast } = useToast();
 
   const handleSubmit = useCallback(
     async (data: SingInFormData) => {
@@ -37,7 +39,7 @@ const SignIn: React.FC = () => {
         await schema.validate(data, {
           abortEarly: false,
         });
-        singIn({
+        await singIn({
           email: data.email,
           password: data.password,
         });
@@ -48,10 +50,10 @@ const SignIn: React.FC = () => {
           formRef.current?.setErrors(errors);
         }
 
-        // disparar um toats
+        addToast();
       }
     },
-    [singIn],
+    [singIn, addToast],
   );
 
   return (
