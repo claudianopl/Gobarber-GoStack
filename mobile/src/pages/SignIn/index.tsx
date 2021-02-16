@@ -30,21 +30,21 @@ import {
   CreateAccountButtonText,
 } from './styles';
 
-interface SingInFormData {
+interface SignInFormData {
   email: string;
   password: string;
 }
 
-const SingIn: React.FC = () => {
+const SignIn: React.FC = () => {
   const navigation = useNavigation();
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null)
 
-  const { singIn, user } = useAuth();
+  const { signIn, user } = useAuth();
   console.log(user)
 
-  const handleSingIn = useCallback(
-    async (data: SingInFormData) => {
+  const handleSignIn = useCallback(
+    async (data: SignInFormData) => {
       try {
         formRef.current?.setErrors({});
 
@@ -58,7 +58,7 @@ const SingIn: React.FC = () => {
           abortEarly: false,
         });
 
-        await singIn({
+        await signIn({
           email: data.email,
           password: data.password,
         });
@@ -99,7 +99,7 @@ const SingIn: React.FC = () => {
             <View>
               <Title>Faça seu logon</Title>
             </View>
-            <Form onSubmit={handleSingIn} ref={formRef}>
+            <Form onSubmit={handleSignIn} ref={formRef}>
               <Input
                 autoCorrect={false}
                 autoCapitalize='none'
@@ -143,7 +143,7 @@ const SingIn: React.FC = () => {
         </ScrollView>
       </KeyboardAvoidingView>
 
-      <CreateAccountButton onPress={() => navigation.navigate('SingUp')}>
+      <CreateAccountButton onPress={() => navigation.navigate('SignUp')}>
         <Icon name='log-in' size={20} color='#ff9000' />
         <CreateAccountButtonText>Criar uma conta</CreateAccountButtonText>
       </CreateAccountButton>
@@ -151,4 +151,4 @@ const SingIn: React.FC = () => {
   );
 };
 
-export default SingIn;
+export default SignIn;

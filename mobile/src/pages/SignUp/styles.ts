@@ -16,7 +16,7 @@ export const Title = styled.Text`
   margin: 64px 0 24px;
 `;
 
-export const BackToSingIn = styled.TouchableOpacity`
+export const BackToSignIn = styled.TouchableOpacity`
   position: absolute;
   left: 0;
   bottom: 0;
@@ -32,7 +32,7 @@ export const BackToSingIn = styled.TouchableOpacity`
   flex: 0;
 `;
 
-export const BackToSingInText = styled.Text`
+export const BackToSignInText = styled.Text`
   color: #fff;
   font-size: 18px;
   font-family: 'RobotoSlab-Regular';

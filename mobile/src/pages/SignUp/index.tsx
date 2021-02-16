@@ -25,24 +25,24 @@ import logoImg from '../../assets/logo.png';
 import {
   Container,
   Title,
-  BackToSingIn,
-  BackToSingInText,
+  BackToSignIn,
+  BackToSignInText,
 } from './styles';
 
-interface SingUpFormData {
+interface SignUpFormData {
   name: string;
   email: string;
   password: string;
 }
 
-const SingUp: React.FC = () => {
+const SignUp: React.FC = () => {
   const navigation = useNavigation();
   const formRef = useRef<FormHandles>(null);
   const emailInputRef = useRef<TextInput>(null);
   const passwordInputRef = useRef<TextInput>(null);
 
-  const handleSingUp = useCallback(
-    async (data: SingUpFormData) => {
+  const handleSignUp = useCallback(
+    async (data: SignUpFormData) => {
       try {
         formRef.current?.setErrors({});
 
@@ -99,7 +99,7 @@ const SingUp: React.FC = () => {
             <View>
               <Title>Crie sua conta</Title>
             </View>
-            <Form onSubmit={handleSingUp} ref={formRef}>
+            <Form onSubmit={handleSignUp} ref={formRef}>
               <Input
                 autoCorrect={true}
                 autoCapitalize='words'
@@ -145,12 +145,12 @@ const SingUp: React.FC = () => {
         </ScrollView>
       </KeyboardAvoidingView>
 
-      <BackToSingIn onPress={() => navigation.goBack()}>
+      <BackToSignIn onPress={() => navigation.goBack()}>
         <Icon name='arrow-left' size={20} color='#fff' />
-        <BackToSingInText>Voltar para logon</BackToSingInText>
-      </BackToSingIn>
+        <BackToSignInText>Voltar para logon</BackToSignInText>
+      </BackToSignIn>
     </>
   );
 };
 
-export default SingUp;
+export default SignUp;
