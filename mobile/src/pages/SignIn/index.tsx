@@ -4,7 +4,8 @@ import {
   View,
   ScrollView,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  TextInput
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
@@ -28,6 +29,7 @@ import {
 const SingIn: React.FC = () => {
   const navigation = useNavigation();
   const formRef = useRef<FormHandles>(null);
+  const passwordInputRef = useRef<TextInput>(null)
 
   const handleSingIn = useCallback((data: object) => {
     console.log(data);
@@ -52,14 +54,28 @@ const SingIn: React.FC = () => {
             </View>
             <Form onSubmit={handleSingIn} ref={formRef}>
               <Input
+                autoCorrect={false}
+                autoCapitalize='none'
+                keyboardType='email-address'
                 name="email"
                 icon="mail"
                 placeholder="E-mail"
+                returnKeyType='next'
+                onSubmitEditing={() => {
+                  passwordInputRef.current?.focus()
+                }}
               />
               <Input
+                ref={passwordInputRef}
+                secureTextEntry
+                returnKeyType='send'
+                textContentType='newPassword'
                 name="password"
                 icon="lock"
                 placeholder="Senha"
+                onSubmitEditing={() => {
+                  formRef.current?.submitForm();
+                }}
               />
 
 
