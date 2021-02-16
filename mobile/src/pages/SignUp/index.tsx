@@ -14,6 +14,8 @@ import { useNavigation } from '@react-navigation/native';
 import { Form } from '@unform/mobile'
 import { FormHandles } from '@unform/core';
 
+import api from '../../services/api';
+
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import getValidationErrors from '../../utils/getValidationErros';
@@ -55,9 +57,14 @@ const SingUp: React.FC = () => {
           abortEarly: false,
         });
 
-        // await api.post('/users', data);
+        await api.post('/users', data);
 
-        // history.push('/');
+        Alert.alert(
+          'Cadastro realizado com sucesso!',
+          'Você já pode efetuar o login na aplicação'
+        )
+
+        navigation.goBack();
       } catch (err) {
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -73,7 +80,7 @@ const SingUp: React.FC = () => {
         );
       }
     },
-    [],
+    [navigation],
   );
   return (
     <>
@@ -130,7 +137,7 @@ const SingUp: React.FC = () => {
               <Button
                 onPress={() => formRef.current?.submitForm()}
               >
-                Entrar
+                Cadastrar
               </Button>
             </Form>
 

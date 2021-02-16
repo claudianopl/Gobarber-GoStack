@@ -17,6 +17,7 @@ import { FormHandles } from '@unform/core';
 import Input from '../../components/Input';
 import Button from '../../components/Button';
 import getValidationErrors from '../../utils/getValidationErros';
+import { useAuth } from '../../hooks/auth';
 
 import logoImg from '../../assets/logo.png';
 
@@ -39,6 +40,9 @@ const SingIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const passwordInputRef = useRef<TextInput>(null)
 
+  const { singIn, user } = useAuth();
+  console.log(user)
+
   const handleSingIn = useCallback(
     async (data: SingInFormData) => {
       try {
@@ -54,12 +58,10 @@ const SingIn: React.FC = () => {
           abortEarly: false,
         });
 
-        /*
-          await singIn({
+        await singIn({
           email: data.email,
           password: data.password,
         });
-        */
 
         //history.push('/dashboard');
       } catch (err) {
