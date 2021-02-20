@@ -4,8 +4,9 @@ import CreateUserService from '@modules/users/services/CreateUserService';
 import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService';
 import ensureAuthenticated from '@modules/users/infra/http/middleware/ensureAuthenticated';
 import uploadConfig from '@config/upload';
+import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepository';
 
-interface DeletePassword {
+interface IDeletePassword {
   password?: string;
 }
 
@@ -13,11 +14,13 @@ const usersRouter = Router();
 const upload = multer(uploadConfig);
 
 usersRouter.post('/', async (request, response) => {
+  const usersRepository = new UsersRepository();
+
   const { name, email, password } = request.body;
 
-  const createUser = new CreateUserService();
+  const createUser = new CreateUserService(usersRepository);
 
-  const user: DeletePassword = await createUser.execute({
+  const user: IDeletePassword = await createUser.execute({
     name,
     email,
     password,
@@ -33,9 +36,11 @@ usersRouter.patch(
   ensureAuthenticated,
   upload.single('avatar'),
   async (request, response) => {
-    const updateUserAvatar = new UpdateUserAvatarService();
+    const usersRepository = new UsersRepository();
 
-    const user: DeletePassword = await updateUserAvatar.execute({
+    const updateUserAvatar = new UpdateUserAvatarService(usersRepository);
+
+    const user: IDeletePassword = await updateUserAvatar.execute({
       user_id: request.user.id,
       avatarFileName: request.file.filename,
     });
