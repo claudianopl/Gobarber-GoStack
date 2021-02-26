@@ -1,11 +1,10 @@
 /* eslint-disable prettier/prettier */
-import { hash } from 'bcryptjs';
 import { injectable, inject } from 'tsyringe';
-
 
 import User from '@modules/users/infra/typeorm/entities/User';
 import AppError from '@shared/errors/AppError';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
+import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
 
 interface IRequestDTO {
   name: string;
@@ -17,7 +16,9 @@ interface IRequestDTO {
 class CreateUserService {
   constructor(
     @inject('UsersRepository')
-    private usersRepository: IUsersRepository
+    private usersRepository: IUsersRepository,
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) { }
 
   public async execute({ name, email, password }: IRequestDTO): Promise<User> {
@@ -27,7 +28,7 @@ class CreateUserService {
       throw new AppError('Email address alread used');
     }
 
-    const hashPassword = await hash(password, 8);
+    const hashPassword = await this.hashProvider.generateHash(password);
 
     const user = this.usersRepository.create({
       name,
