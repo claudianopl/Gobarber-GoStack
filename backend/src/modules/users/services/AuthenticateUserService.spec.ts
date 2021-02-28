@@ -63,7 +63,7 @@ describe('CreateUser', () => {
       fakeHashProvider,
     );
 
-    createUser.execute({
+    await createUser.execute({
       name: 'Jhon Doe',
       email: 'jhondoe@example.com',
       password: '123456',
@@ -72,7 +72,7 @@ describe('CreateUser', () => {
     expect(
       authenticateUserService.execute({
         email: 'jhondoe@example.com',
-        password: 'wrong-password',
+        password: '123458456123',
       }),
     ).rejects.toBeInstanceOf(AppError);
   });
