@@ -20,6 +20,7 @@
     "prettier"
   ],
   "rules": {
+    "no-useless-return": "off",
     "prettier/prettier": [
       "error",
       {
