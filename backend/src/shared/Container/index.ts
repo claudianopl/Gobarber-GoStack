@@ -1,7 +1,7 @@
 /* eslint-disable import/no-unresolved */
 import { container } from 'tsyringe';
 
-import '@modules/users/providers';
+import '@modules/users/providers/HashProvider';
 import '@shared/Container/providers';
 
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';

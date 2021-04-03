@@ -19,15 +19,16 @@ export default class AlterProviderFieldToProviderId1605759653190
       }),
     );
 
+    // Criar a chave estrangeira
     await queryRunner.createForeignKey(
       'appointments',
       new TableForeignKey({
         name: 'AppointmentProvider',
-        columnNames: ['provider_id'],
-        referencedColumnNames: ['id'],
+        columnNames: ['provider_id'], // Vai receber a chave estrangeira
+        referencedColumnNames: ['id'], // Da coluna 'id', da tabela de 'users'
         referencedTableName: 'users',
-        onDelete: 'SET NULL',
-        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL', // Quando deletar esse provider, vai setar o 'provider_id' como 'null'
+        onUpdate: 'CASCADE', // Quando atualizar o id do provider, vai atualizar o provider_id, nas tabela que estao relacionadas, como a tabela 'users'
       }),
     );
   }
