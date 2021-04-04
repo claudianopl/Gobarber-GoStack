@@ -8,6 +8,5 @@ const resetPasswordController = new ResetPasswordController();
 
 sessionsRouter.post('/forgot', forgotPasswordController.create);
 sessionsRouter.post('/reset', resetPasswordController.create);
-console.log('test');
 
 export default sessionsRouter;
